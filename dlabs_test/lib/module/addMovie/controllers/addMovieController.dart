@@ -16,15 +16,14 @@ class AddMovieController extends GetxController {
   Future<void> addMovie() async {
     try {
       if (title != "" && desc != "") {
-        print("ini title $title dan $desc");
         await AddMovieNetwork()
             .addMoviesNetwork(title: title, desc: desc, img: img.text);
       } else {
-        throw "All must be filled";
+        throw "title and description is required";
       }
     } catch (e) {
-      if (e == "All must be filled") {
-        Get.snackbar("Error", "All must be filled",
+      if (e == "title and description is required") {
+        Get.snackbar("Error", "title and description is required",
             backgroundColor: AppColors.kErrorColor, colorText: Colors.white);
       } else {
         Get.snackbar("Error", "Something went wrong",
@@ -35,7 +34,6 @@ class AddMovieController extends GetxController {
 
   Future<void> pickImage() async {
     try {
-      // String tempPath = tempDir.path;
       XFile? picked = await _picker.pickImage(source: ImageSource.gallery);
 
       img.text = picked!.path;
